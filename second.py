@@ -1,4 +1,7 @@
+import random
 from timeit import default_timer as timer
+
+
 class Instance:
 	def __init__(self,n,k,h,d,r,f,jobs):
 		self.n = n
@@ -62,6 +65,24 @@ def calcResult(inst):
 			inst.f += (t-dd)*j.b
 	inst.f = int(inst.f)
 
+def mutate(inst):
+	if random.randrange(10) > 4:	
+		#swap two jobs
+		swap1 = random.randint(0,inst.n-1)
+		swap2 = random.randint(0,inst.n-1)
+		inst.jobs[swap1],inst.jobs[swap2] = inst.jobs[swap2],inst.jobs[swap1]
+	else:
+		#move jobs block
+		inst.r +=random.randint(-inst.r,inst.d*inst.h)
+
+def generateFisrtPopultaion(inst,count):
+	population=[]
+	for i in range(count):
+	#TODO make copy of instance
+		population.append(mutate(copyofinst))
+	return population
+
+
 def shedule(inst):
 	start=timer()	
 	for j in inst.jobs:
@@ -76,7 +97,7 @@ def shedule(inst):
 		w = abs(j.w)
 		weights += w
 		center += t * w
-	center /= weights
+	center = int(center/weights)
 	inst.r = max(0,dd - center)
 	inst.t=timer() - start
 	#liczenie kary
