@@ -1,4 +1,5 @@
 import random
+import copy
 from timeit import default_timer as timer
 
 
@@ -79,7 +80,7 @@ def generateFisrtPopultaion(inst,count):
 	population=[]
 	for i in range(count):
 	#TODO make copy of instance
-		population.append(mutate(copyofinst))
+		population.append(mutate(copy.deepcopy(inst)))
 	return population
 
 
