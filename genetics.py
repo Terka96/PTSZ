@@ -10,7 +10,8 @@ CROSSOVER_CHANCE = 0.3  # Chance for cross two members instead of just copy one 
 MUTATION_CHANCE = 0.1  # Chance for mutate child
 
 # Mutation parameters
-MUTATE_ELEMENT_CHANCE = 0.05  # Chance to mutate the element
+SWAP_ELEMENT_CHANCE = 0.05  # Chance to swap the job
+CHANGE_R_CHANCE = 0.2  # Chance to change R position
 
 
 # Crossover parameters
@@ -48,19 +49,27 @@ def crossover(inst_a, inst_b):
                 inst_c.jobs[i] = job
                 not_assigned_jobs.remove(job.id)
             else:
-                inst_c.jobs[not_assigned_jobs[0]] = job     # Put element from B to the first available position of C
+                inst_c.jobs[not_assigned_jobs[0]] = job  # Put element from B to the first available position of C
                 not_assigned_jobs.pop(0)
 
     return inst_c
 
 
+# Swap jobs and move R position with preset probability
 def mutate(inst):
-    if random.randrange(10) > 4:
-        # swap two jobs
-        swap1 = random.randint(0, inst.n - 1)
-        swap2 = random.randint(0, inst.n - 1)
-        inst.jobs[swap1], inst.jobs[swap2] = inst.jobs[swap2], inst.jobs[swap1]
-    else:
+    # Swap elements
+    fist_job_idx = None  # one of the jobs to swap
+    for i in range(0, inst.n):
+        if random.uniform(0, 1) <= SWAP_ELEMENT_CHANCE:
+            # swap two jobs
+            if fist_job_idx is None:
+                fist_job_idx = i
+            else:
+                inst.jobs[fist_job_idx], inst.jobs[i] = inst.jobs[i], inst.jobs[fist_job_idx]
+                fist_job_idx = None
+
+    # Change R position
+    if random.uniform(0, 1) <= CHANGE_R_CHANCE:
         # move jobs block
         inst.r += random.randint(-inst.r, inst.d * inst.h)
 
