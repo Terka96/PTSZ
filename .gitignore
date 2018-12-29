@@ -1,1 +1,4 @@
-./idea
+.idea
+results
+__pycached__
+venv
