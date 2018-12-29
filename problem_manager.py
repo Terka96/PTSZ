@@ -1,12 +1,8 @@
-import copy
 import os
-import random
 from timeit import default_timer as timer
 
 from Instance import Instance
 from Job import Job
-from genetics import crossover
-
 
 def read(size):
     problem_id = 0

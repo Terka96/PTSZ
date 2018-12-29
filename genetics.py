@@ -5,6 +5,8 @@ import copy
 from Instance import Instance
 
 # Default parameters
+from problem_manager import calc_result
+
 POPULATION_SIZE = 10  # Number of members in a generation
 CROSSOVER_CHANCE = 0.3  # Chance for cross two members instead of just copy one of them to next generation
 MUTATION_CHANCE = 0.1  # Chance for mutate child
@@ -20,6 +22,9 @@ CHANGE_R_CHANCE = 0.2  # Chance to change R position
 def start(inst):
     best_member = None
     population = generate_first_population(inst, POPULATION_SIZE)
+
+    for inst in population:
+        calc_result(inst)
 
     return best_member
 
