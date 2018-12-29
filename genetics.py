@@ -17,6 +17,13 @@ CHANGE_R_CHANCE = 0.2  # Chance to change R position
 # Crossover parameters
 
 
+def start(inst):
+    best_member = None
+    population = generate_first_population(inst, POPULATION_SIZE)
+
+    return best_member
+
+
 # Create child C from members A and B
 def crossover(inst_a, inst_b):
     start_index = random.randint(0, int(inst_a.n / 2))  # Start coping from this element of A
@@ -71,7 +78,8 @@ def mutate(inst):
     # Change R position
     if random.uniform(0, 1) <= CHANGE_R_CHANCE:
         # move jobs block
-        inst.r += random.randint(-inst.r, inst.d * inst.h)
+        inst.r += random.randint(-inst.r, int(inst.d * inst.h))
+    return inst
 
 
 # Select members for new population. It's random with higher chance for better members.
@@ -84,5 +92,6 @@ def choose_next_generation():
 def generate_first_population(inst, count):
     population = []
     for i in range(count):
-        population.append(mutate(copy.deepcopy(inst)))
+        instance = copy.deepcopy(inst)
+        population.append(mutate(instance))
     return population

@@ -76,6 +76,7 @@ def schedule(inst):
     # liczenie kary
     calc_result(inst)
 
+
 def export(inst):
     path = "results"
     if not os.path.exists(path):
