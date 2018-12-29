@@ -1,5 +1,4 @@
-import random
-import copy
+import os
 from timeit import default_timer as timer
 
 
@@ -20,7 +19,6 @@ class Job:
 	a = 0
 	b = 0
 	w = 0
-
 
 
 def read(size):
@@ -71,25 +69,7 @@ def calc_result(inst):
 	inst.f = int(inst.f)
 
 
-def mutate(inst):
-	if random.randrange(10) > 4:
-		# swap two jobs
-		swap1 = random.randint(0, inst.n - 1)
-		swap2 = random.randint(0, inst.n - 1)
-		inst.jobs[swap1], inst.jobs[swap2] = inst.jobs[swap2], inst.jobs[swap1]
-	else:
-		# move jobs block
-		inst.r += random.randint(-inst.r, inst.d * inst.h)
-
-
-def generate_fisrt_popultaion(inst, count):
-	population = []
-	for i in range(count):
-		population.append(mutate(copy.deepcopy(inst)))
-	return population
-
-
-def shedule(inst):
+def schedule(inst):
 	start = timer()
 	for j in inst.jobs:
 		j.w = (-j.a + j.b) * j.p
@@ -111,22 +91,17 @@ def shedule(inst):
 
 
 def export(inst):
-	filename = "results/n" + str(inst.n) + "k" + str(inst.k) + "h" + str(int(inst.h * 10))
+	path = "results"
+	if not os.path.exists(path):
+		os.makedirs(path)
+
+	filename = path + "/n" + str(inst.n) + "k" + str(inst.k) + "h" + str(int(inst.h * 10))
 	file = open(filename, "w+")
 	if (inst.h == 0.2 and inst.n == 10) or (inst.h == 0.4 and inst.n == 20) or (inst.h == 0.6 and inst.n == 50) or (
 			inst.h == 0.8 and inst.n == 100) or (inst.h == 0.2 and inst.n == 200) or (
 			inst.h == 0.4 and inst.n == 500) or (inst.h == 0.6 and inst.n == 1000):
 		print(str(inst.f) + " " + str(inst.t))
 	file.write(str(inst.f) + ' ' + str(inst.h) + ' ' + str(inst.r))
-	for j in i.jobs:
+	for j in inst.jobs:
 		file.write(' ' + str(j.id))
 	file.close()
-
-
-for s in [10, 20, 50, 100, 200, 500, 1000]:
-	print("n=" + str(s) + "\n")
-	instances = read(s)
-	for i in instances:
-		shedule(i)
-	for i in instances:
-		export(i)
