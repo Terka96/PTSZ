@@ -4,6 +4,7 @@ from timeit import default_timer as timer
 from Instance import Instance
 from Job import Job
 
+
 def read(size):
     problem_id = 0
     jobs_n = 0
@@ -41,6 +42,7 @@ def read(size):
 
 
 def calc_result(inst):
+    inst.f = 0
     dd = int(inst.d * inst.h)
     t = inst.r
     for j in inst.jobs:
