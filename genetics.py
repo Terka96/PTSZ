@@ -1,5 +1,18 @@
+# https://www.youtube.com/watch?v=XP8R0yzAbdo - example of genetic algorithm
+
 import random
 import copy
+
+# Default parameters
+POPULATION_SIZE = 10    # Number of members in a generation
+CROSSOVER_CHANCE = 0.3  # Chance for cross two members instead of just copy one of them to next generation
+MUTATION_CHANCE = 0.1   # Chance for mutate child
+
+
+# Create child C from members A and B
+def crossover():
+    # todo: implement
+    return None
 
 
 def mutate(inst):
@@ -11,6 +24,13 @@ def mutate(inst):
     else:
         # move jobs block
         inst.r += random.randint(-inst.r, inst.d * inst.h)
+
+
+# Select members for new population. It's random with higher chance for better members.
+# Probability to pick member is 1 - place/size
+def choose_next_generation():
+    # todo implement
+    return None
 
 
 def generate_first_population(inst, count):
