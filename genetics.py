@@ -8,13 +8,13 @@ from Instance import Instance
 from problem_manager import calc_result
 
 MAX_GENERATIONS = 50    # Index of last generation
-CONSTANT_MEMBERS = 0.2  # Percentage of members copied directly to new generation (no crossover)
-POPULATION_SIZE = 10  # Number of members in a generation
-CROSSOVER_CHANCE = 0.3  # Chance for cross two members instead of just copy one of them to next generation
-MUTATION_CHANCE = 0.1  # Chance for mutate child
+CONSTANT_MEMBERS = 0.1  # Percentage of members copied directly to new generation (no crossover)
+POPULATION_SIZE = 50  # Number of members in a generation
+CROSSOVER_CHANCE = 0.5  # Chance for cross two members instead of just copy one of them to next generation
+MUTATION_CHANCE = 0.2  # Chance for mutate child
 
 # Mutation parameters
-SWAP_ELEMENT_CHANCE = 0.05  # Chance to swap the job
+SWAP_ELEMENT_CHANCE = 0.1  # Chance to swap the job
 CHANGE_R_CHANCE = 0.2  # Chance to change R position
 
 # Crossover parameters
@@ -78,11 +78,11 @@ def crossover(inst_a, inst_b):
 
 
 # Swap jobs and move R position with preset probability
-def mutate(inst):
+def mutate(inst, swap_chance=SWAP_ELEMENT_CHANCE, change_r_chance=CHANGE_R_CHANCE):
     # Swap elements
     fist_job_idx = None  # one of the jobs to swap
     for i in range(0, len(inst.jobs)):
-        if random.uniform(0, 1) <= SWAP_ELEMENT_CHANCE:
+        if random.uniform(0, 1) <= swap_chance:
             # swap two jobs
             if fist_job_idx is None:
                 fist_job_idx = i
@@ -91,7 +91,7 @@ def mutate(inst):
                 fist_job_idx = None
 
     # Change R position
-    if random.uniform(0, 1) <= CHANGE_R_CHANCE:
+    if random.uniform(0, 1) <= change_r_chance:
         # move jobs block
         inst.r += random.randint(-inst.r, int(inst.d * inst.h))
     return inst
@@ -130,5 +130,5 @@ def generate_first_population(inst, count):
     population = []
     for i in range(count):
         instance = copy.deepcopy(inst)
-        population.append(mutate(instance))
+        population.append(mutate(instance, 0.7, 0.3))
     return population
