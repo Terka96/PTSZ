@@ -8,6 +8,11 @@ POPULATION_SIZE = 10    # Number of members in a generation
 CROSSOVER_CHANCE = 0.3  # Chance for cross two members instead of just copy one of them to next generation
 MUTATION_CHANCE = 0.1   # Chance for mutate child
 
+# Mutation parameters
+MUTATE_ELEMENT_CHANCE = 0.05    # Chance to mutate the element
+
+# Crossover parameters
+
 
 # Create child C from members A and B
 def crossover():

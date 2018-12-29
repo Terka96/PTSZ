@@ -1,5 +1,5 @@
 .idea
 results
 venv
-venv
+.idea*
 __pycache__
