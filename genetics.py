@@ -2,10 +2,9 @@
 
 import random
 import copy
-from Instance import Instance
 
 # Default parameters
-from problem_manager import calc_result
+from calculator import calc_result
 
 MAX_GENERATIONS = 50    # Index of last generation
 CONSTANT_MEMBERS = 0.1  # Percentage of members copied directly to new generation (no crossover)

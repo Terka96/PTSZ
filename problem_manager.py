@@ -1,8 +1,10 @@
 import os
 from timeit import default_timer as timer
 
+import genetics
 from Instance import Instance
 from Job import Job
+from calculator import calc_result
 
 
 def read(size):
@@ -41,19 +43,6 @@ def read(size):
     return instances
 
 
-def calc_result(inst):
-    inst.f = 0
-    dd = int(inst.d * inst.h)
-    t = inst.r
-    for j in inst.jobs:
-        t += j.p
-        if t < dd:
-            inst.f += (dd - t) * j.a
-        elif t > dd:
-            inst.f += (t - dd) * j.b
-    inst.f = int(inst.f)
-
-
 def schedule(inst):
     start = timer()
     for j in inst.jobs:
@@ -70,9 +59,14 @@ def schedule(inst):
         center += t * w
     center = int(center / weights)
     inst.r = max(0, dd - center)
-    inst.t = timer() - start
     # liczenie kary
     calc_result(inst)
+
+    # Use genetic algorithm
+    inst = genetics.start(inst)
+
+    inst.t = timer() - start
+    return inst
 
 
 def export(inst):
