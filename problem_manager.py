@@ -63,7 +63,8 @@ def schedule(inst):
     calc_result(inst)
 
     # Use genetic algorithm
-    inst = genetics.start(inst)
+    genetic = genetics.Genetics()
+    inst = genetic.start(inst)
 
     inst.t = timer() - start
     return inst
