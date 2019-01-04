@@ -1,5 +1,6 @@
 .idea
 results
 venv
+*resul*
 .idea*
 __pycache__
