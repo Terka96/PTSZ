@@ -32,4 +32,4 @@ for s in [10]: #, 20, 50, 100, 200, 500, 1000]:
                                     for i in range(len(instances)):
                                         instances[i] = problem_manager.custom_schedule(instances[i], True, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha)
                                         instances_to_save.append(instances[i])
-                                problem_manager.export_tuner(instances_to_save, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha)
+                                problem_manager.export_tuner(instances_to_save, ATTEMPTS, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha)

@@ -93,14 +93,14 @@ def export(inst):
     file.close()
 
 
-def export_tuner(instances, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha):
+def export_tuner(instances, attempts, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha):
     path = "tuner_results"
 
     n = instances[0].n
-    f = sum(i.f for i in instances)
-    t = sum(i.t for i in instances)
+    f = sum(i.f for i in instances)/attempts
+    t = sum(i.t for i in instances)/attempts
 
-    filename = os.path.join(path, "tuner_results.csv")
+    filename = os.path.join(path, "n{0}.csv".format(n))
     if not os.path.exists(path):
         os.makedirs(path)
     if not os.path.exists(filename):
