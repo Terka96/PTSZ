@@ -43,7 +43,8 @@ def read(size):
     return instances
 
 
-def schedule(inst):
+def custom_schedule(inst, custom_params=True, max_gen=None, const_memb=None, pop_size=None, cross_chance=None,
+                    mut_chance=None, swap_el_chance=None, change_r_chance=None):
     start = timer()
     for j in inst.jobs:
         j.w = (-j.a + j.b) * j.p
@@ -63,11 +64,16 @@ def schedule(inst):
     calc_result(inst)
 
     # Use genetic algorithm
-    genetic = genetics.Genetics()
+    genetic = genetics.Genetics(max_gen, const_memb, pop_size, cross_chance, mut_chance, swap_el_chance,
+                                change_r_chance) if custom_params else genetics.Genetics()
     inst = genetic.start(inst)
 
     inst.t = timer() - start
     return inst
+
+
+def schedule(inst):
+    return custom_schedule(inst, False)
 
 
 def export(inst):
@@ -85,3 +91,20 @@ def export(inst):
     for j in inst.jobs:
         file.write(' ' + str(j.id))
     file.close()
+
+
+def export_tuner(inst, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha):
+    path = "tuner_results"
+
+    filename = os.path.join(path, "tuner_results.csv")
+    if not os.path.exists(path):
+        os.makedirs(path)
+    if not os.path.exists(filename):
+        with open(filename, "a") as file:
+            file.write("n" + '\t' + "h" + '\t' + "f" + '\t' + "time" + "\t"
+                       + "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}".format("MAX_GENERATIONS", "CONSTANT_MEMBERS", "POPULATION_SIZE", "CROSSOVER_CHANCE",
+                                                                      "MUTATION_CHANCE", "SWAP_ELEMENT_CHANCE", "CHANGE_R_CHANCE"))
+
+    with open(filename, "a") as file:
+        file.write("\n" + str(inst.n) + '\t' + str(inst.h) + '\t' + str(inst.f) + '\t' + str(inst.t)
+                   + "\t" + "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}".format(max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha))
