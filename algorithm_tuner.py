@@ -14,22 +14,22 @@ MUTATION_CHANCE = [0.3, 0.4] #numpy.arange(0.1, 0.4, 0.1)  # Chance for mutate c
 SWAP_ELEMENT_CHANCE = [0.1, 0.2] #numpy.arange(0.1, 0.3, 0.1)  # Chance to swap the job
 CHANGE_R_CHANCE = [0.2, 0.3] #numpy.arange(0.2, 0.4, 0.1)  # Chance to change R position
 
-ATTEMPTS = 5
+ATTEMPTS = 10
 
 #todo: wyniki muszą pochodzić z kilku pomiarów i być uśredniane
-for max_gen in MAX_GENERATIONS:
-    for const_mem in CONSTANT_MEMBERS:
-        for pop_size in POPULATION_SIZE:
-            for cross_cha in CROSSOVER_CHANCE:
-                for mut_cha in MUTATION_CHANCE:
-                    for swap_cha in SWAP_ELEMENT_CHANCE:
-                        for change_cha in CHANGE_R_CHANCE:
-                            for s in [10]: #, 20, 50, 100, 200, 500, 1000]:
+for s in [10]: #, 20, 50, 100, 200, 500, 1000]:
+    for max_gen in MAX_GENERATIONS:
+        for const_mem in CONSTANT_MEMBERS:
+            for pop_size in POPULATION_SIZE:
+                for cross_cha in CROSSOVER_CHANCE:
+                    for mut_cha in MUTATION_CHANCE:
+                        for swap_cha in SWAP_ELEMENT_CHANCE:
+                            for change_cha in CHANGE_R_CHANCE:
+                                instances_to_save = []
                                 # todo: pasek postępu
                                 for x in range(ATTEMPTS):
                                     instances = problem_manager.read(s)
                                     for i in range(len(instances)):
                                         instances[i] = problem_manager.custom_schedule(instances[i], True, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha)
-
-                                    for i in instances:
-                                        problem_manager.export_tuner(i, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha)
+                                        instances_to_save.append(instances[i])
+                                problem_manager.export_tuner(instances_to_save, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha)

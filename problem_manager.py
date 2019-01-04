@@ -93,18 +93,22 @@ def export(inst):
     file.close()
 
 
-def export_tuner(inst, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha):
+def export_tuner(instances, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha):
     path = "tuner_results"
+
+    n = instances[0].n
+    f = sum(i.f for i in instances)
+    t = sum(i.t for i in instances)
 
     filename = os.path.join(path, "tuner_results.csv")
     if not os.path.exists(path):
         os.makedirs(path)
     if not os.path.exists(filename):
         with open(filename, "a") as file:
-            file.write("n" + '\t' + "h" + '\t' + "f" + '\t' + "time" + "\t"
+            file.write("n" + '\t' + "f" + '\t' + "time" + "\t"
                        + "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}".format("MAX_GENERATIONS", "CONSTANT_MEMBERS", "POPULATION_SIZE", "CROSSOVER_CHANCE",
                                                                       "MUTATION_CHANCE", "SWAP_ELEMENT_CHANCE", "CHANGE_R_CHANCE"))
 
     with open(filename, "a") as file:
-        file.write("\n" + str(inst.n) + '\t' + str(inst.h) + '\t' + str(inst.f) + '\t' + str(inst.t)
+        file.write("\n" + str(n) + '\t' + str(f) + '\t' + str(t)
                    + "\t" + "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}".format(max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha))
