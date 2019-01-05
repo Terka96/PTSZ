@@ -6,7 +6,7 @@ import copy
 # Default parameters
 from calculator import calc_result
 
-MAX_GENERATIONS = 50    # Index of last generation
+MAX_GENERATIONS = 10    # Index of last generation
 CONSTANT_MEMBERS = 0.1  # Percentage of members copied directly to new generation (no crossover)
 POPULATION_SIZE = 50  # Number of members in a generation
 CROSSOVER_CHANCE = 0.5  # Chance for cross two members instead of just copy one of them to next generation
@@ -127,11 +127,15 @@ class Genetics:
                         if len(next_gen) == self.POPULATION_SIZE:
                             break
 
+        # Mutate
+        for i in range(len(next_gen)):
+            if random.uniform(0, 1) <= self.MUTATION_CHANCE:
+                next_gen[i] = self.mutate(next_gen[i], self.SWAP_ELEMENT_CHANCE,  self.CHANGE_R_CHANCE)
+
         for inst in next_gen:
-            if inst is None:
-                print("a")
             calc_result(inst)
         next_gen.sort(key=lambda instance: instance.f, reverse=False)
+
         return next_gen
 
     def generate_first_population(self, inst, count):

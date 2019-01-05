@@ -69,6 +69,7 @@ def custom_schedule(inst, custom_params=True, max_gen=None, const_memb=None, pop
     inst = genetic.start(inst)
 
     inst.t = timer() - start
+    print('.', end="")
     return inst
 
 
