@@ -7,14 +7,14 @@ import copy
 from calculator import calc_result
 
 MAX_GENERATIONS = 10    # Index of last generation
-CONSTANT_MEMBERS = 0.1  # Percentage of members copied directly to new generation (no crossover)
+CONSTANT_MEMBERS = 0.3  # Percentage of members copied directly to new generation (no crossover)
 POPULATION_SIZE = 50  # Number of members in a generation
-CROSSOVER_CHANCE = 0.5  # Chance for cross two members instead of just copy one of them to next generation
-MUTATION_CHANCE = 0.2  # Chance for mutate child
+CROSSOVER_CHANCE = 0.9  # Chance for cross two members instead of just copy one of them to next generation
+MUTATION_CHANCE = 0.9  # Chance for mutate child
 
 # Mutation parameters
-SWAP_ELEMENT_CHANCE = 0.1  # Chance to swap the job
-CHANGE_R_CHANCE = 0.2  # Chance to change R position
+SWAP_ELEMENT_CHANCE = 0.3  # Chance to swap the job
+CHANGE_R_CHANCE = 0.1  # Chance to change R position
 
 # Crossover parameters
 
