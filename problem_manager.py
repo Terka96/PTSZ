@@ -1,4 +1,5 @@
 import os
+import sys
 from timeit import default_timer as timer
 
 import genetics
@@ -43,7 +44,7 @@ def read(size):
     return instances
 
 
-def custom_schedule(inst, custom_params=True, max_gen=None, const_memb=None, pop_size=None, cross_chance=None,
+def custom_schedule(inst, custom_params=True, max_proc_time=0, max_gen=None, const_memb=None, pop_size=None, cross_chance=None,
                     mut_chance=None, swap_el_chance=None, change_r_chance=None):
     start = timer()
     for j in inst.jobs:
@@ -66,15 +67,16 @@ def custom_schedule(inst, custom_params=True, max_gen=None, const_memb=None, pop
     # Use genetic algorithm
     genetic = genetics.Genetics(max_gen, const_memb, pop_size, cross_chance, mut_chance, swap_el_chance,
                                 change_r_chance) if custom_params else genetics.Genetics()
-    inst = genetic.start(inst)
+    inst = genetic.start(inst, max_proc_time)
 
     inst.t = timer() - start
-    print('.', end="")
+    sys.stdout.write('.')
+    sys.stdout.flush()
     return inst
 
 
-def schedule(inst):
-    return custom_schedule(inst, False)
+def schedule(inst, max_proc_time=0):
+    return custom_schedule(inst, False, max_proc_time)
 
 
 def export(inst):

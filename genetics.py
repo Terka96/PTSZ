@@ -2,11 +2,12 @@
 
 import random
 import copy
+import time
 
 # Default parameters
 from calculator import calc_result
 
-MAX_GENERATIONS = 10    # Index of last generation
+MAX_GENERATIONS = 5    # Index of last generation
 CONSTANT_MEMBERS = 0.3  # Percentage of members copied directly to new generation (no crossover)
 POPULATION_SIZE = 50  # Number of members in a generation
 CROSSOVER_CHANCE = 0.9  # Chance for cross two members instead of just copy one of them to next generation
@@ -30,7 +31,9 @@ class Genetics:
         self.SWAP_ELEMENT_CHANCE = swap_el_chance
         self.CHANGE_R_CHANCE = change_r_chance
 
-    def start(self, inst):
+    def start(self, inst, max_proc_time=0):
+        start_time = time.time()
+
         population = self.generate_first_population(inst, self.POPULATION_SIZE)
 
         # first population is not sorted and calculated. Same thing is in next_generation function.
@@ -40,7 +43,9 @@ class Genetics:
 
         for i in range(self.MAX_GENERATIONS):
             population = self.next_generation(population)
-
+            if time.time() - start_time > max_proc_time > 0:
+                print("GEN.{1}: Wykorzystano czas dla przetwarzania danej instancji ({0:.2f}s)".format(max_proc_time, i))
+                break
         best_member = population[0]
         return best_member
 
