@@ -7,14 +7,14 @@ import time
 # Default parameters
 from calculator import calc_result
 
-MAX_GENERATIONS = 5    # Index of last generation
+MAX_GENERATIONS = 100000    # Index of last generation
 CONSTANT_MEMBERS = 0.3  # Percentage of members copied directly to new generation (no crossover)
 POPULATION_SIZE = 50  # Number of members in a generation
 CROSSOVER_CHANCE = 0.9  # Chance for cross two members instead of just copy one of them to next generation
-MUTATION_CHANCE = 0.9  # Chance for mutate child
+MUTATION_CHANCE = 0.3  # Chance for mutate child
 
 # Mutation parameters
-SWAP_ELEMENT_CHANCE = 0.3  # Chance to swap the job
+SWAP_ELEMENT_CHANCE = 0.1  # Chance to swap the job
 CHANGE_R_CHANCE = 0.1  # Chance to change R position
 
 # Crossover parameters
@@ -96,19 +96,22 @@ class Genetics:
         change_r_chance = self.CHANGE_R_CHANCE if change_r_chance is None else change_r_chance
         # Swap elements
         fist_job_idx = None  # one of the jobs to swap
-        for i in range(0, len(inst.jobs)):
+        start_int = (random.randint(0, len(inst.jobs)-2))
+        end_int = (random.randint(start_int, len(inst.jobs)))
+        for i in range(start_int, end_int):
             if random.uniform(0, 1) <= swap_chance:
                 # swap two jobs
                 if fist_job_idx is None:
                     fist_job_idx = i
                 else:
+                    # if (inst.jobs[fist_job_idx].a < inst.jobs[fist_job_idx].b) == (inst.jobs[i].a < inst.jobs[i].b):
                     inst.jobs[fist_job_idx], inst.jobs[i] = inst.jobs[i], inst.jobs[fist_job_idx]
                     fist_job_idx = None
 
         # Change R position
         if random.uniform(0, 1) <= change_r_chance:
             # move jobs block
-            inst.r += random.randint(-inst.r, int(inst.d * inst.h))
+            inst.r += random.randint(-inst.r, int((inst.d * inst.h)/10))
         return inst
 
     # Select members for new population. It's random with higher chance for better members.
@@ -147,5 +150,5 @@ class Genetics:
         population = []
         for i in range(count):
             instance = copy.deepcopy(inst)
-            population.append(self.mutate(instance, 0.7, 0.3))
+            population.append(self.mutate(instance, 1, 0.3))
         return population

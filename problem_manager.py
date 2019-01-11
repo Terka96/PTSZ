@@ -37,7 +37,7 @@ def read(size):
             inst.jobs.append(j)
             jobs_left -= 1
             if jobs_left == 0:
-                for h in [0.2, 0.4, 0.6, 0.8]:
+                for h in [0.8]:
                     instances.append(Instance(inst.n, inst.k, h, inst.d, inst.r, inst.f, inst.jobs))
                 problem_id += 1
     handle.close()

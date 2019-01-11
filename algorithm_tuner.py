@@ -10,7 +10,7 @@ import problem_manager
 MAX_GENERATIONS = [3]    #numpy.arange(5, 10, 1)    # Index of last generation
 POPULATION_SIZE = [40]  #numpy.arange(20, 50, 10)   # Number of members in a generation
 
-CONSTANT_MEMBERS = numpy.arange(0.1, 0.6, 0.2)
+CONSTANT_MEMBERS = numpy.arange(0.1, 0.6, 0.1)
 CROSSOVER_CHANCE = numpy.arange(0.3, 0.9, 0.2)  # Chance for cross two members instead of just copy one of them to next generation
 MUTATION_CHANCE = numpy.arange(0.6, 0.9, 0.1)  # Chance for mutate child
 
