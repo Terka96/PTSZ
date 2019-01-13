@@ -43,6 +43,29 @@ def read(size):
     handle.close()
     return instances
 
+def find_optimal_r(inst):
+    dd = int(inst.d * inst.h)
+    lr = 0
+    inst.r = lr
+    calc_result(inst)
+    l = inst.f
+    lr = 0
+    rr = dd    
+    inst.r = rr
+    calc_result(inst)
+    r = inst.f
+    for i in range(15):
+        cr = int((lr+rr)/2)
+        inst.r = cr
+        calc_result(inst)
+        c = inst.f
+        if c > r or r < l:
+            lr = cr
+            l = c
+        elif c > l or l < r:
+            rr = cr
+            r = c
+
 
 def custom_schedule(inst, custom_params=True, max_proc_time=0, max_gen=None, const_memb=None, pop_size=None, cross_chance=None,
                     mut_chance=None, swap_el_chance=None, change_r_chance=None):
@@ -50,17 +73,7 @@ def custom_schedule(inst, custom_params=True, max_proc_time=0, max_gen=None, con
     for j in inst.jobs:
         j.w = (-j.a + j.b) * j.p
     inst.jobs = sorted(inst.jobs, key=lambda j: j.w, reverse=True)
-    dd = int(inst.d * inst.h)
-    t = 0
-    center = 0
-    weights = 0
-    for j in inst.jobs:
-        t += j.p
-        w = abs(j.w)
-        weights += w
-        center += t * w
-    center = int(center / weights)
-    inst.r = max(0, dd - center)
+    find_optimal_r(inst)
     # liczenie kary
     calc_result(inst)
 
