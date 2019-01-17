@@ -9,7 +9,7 @@ for s in [100]:
     instances = problem_manager.read(s)
     # print(math.pow(s, 1/6))
     for i in range(len(instances)):
-        instances[i] = problem_manager.schedule(instances[i], (s/MAX_S)*TIME_FACTOR/math.pow(s, 1/5))
+        instances[i] = problem_manager.schedule(instances[i], 60)
 
     print("\n\nWyniki dla n={0}:\n".format(s))
     for i in instances:

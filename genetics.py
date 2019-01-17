@@ -11,10 +11,10 @@ MAX_GENERATIONS = 100000    # Index of last generation
 CONSTANT_MEMBERS = 0.3  # Percentage of members copied directly to new generation (no crossover)
 POPULATION_SIZE = 50  # Number of members in a generation
 CROSSOVER_CHANCE = 0.9  # Chance for cross two members instead of just copy one of them to next generation
-MUTATION_CHANCE = 0.3  # Chance for mutate child
+MUTATION_CHANCE = 0.9  # Chance for mutate child
 
 # Mutation parameters
-SWAP_ELEMENT_CHANCE = 0.1  # Chance to swap the job
+SWAP_ELEMENT_CHANCE = 0.3  # Chance to swap the job
 CHANGE_R_CHANCE = 0.1  # Chance to change R position
 
 # Crossover parameters
