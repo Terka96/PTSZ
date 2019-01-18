@@ -37,7 +37,7 @@ def read(size):
             inst.jobs.append(j)
             jobs_left -= 1
             if jobs_left == 0:
-                for h in [0.8]:
+                for h in [0.2, 0.4, 0.6, 0.8]:
                     instances.append(Instance(inst.n, inst.k, h, inst.d, inst.r, inst.f, inst.jobs))
                 problem_id += 1
     handle.close()
@@ -98,6 +98,9 @@ def export(inst):
         os.makedirs(path)
 
     filename = path + "/n" + str(inst.n) + "k" + str(inst.k) + "h" + str(int(inst.h * 10))
+
+    csv = "results.csv"
+
     file = open(filename, "w+")
     if (inst.h == 0.2 and inst.n == 10) or (inst.h == 0.4 and inst.n == 20) or (inst.h == 0.6 and inst.n == 50) or (
             inst.h == 0.8 and inst.n == 100) or (inst.h == 0.2 and inst.n == 200) or (
@@ -107,6 +110,9 @@ def export(inst):
     for j in inst.jobs:
         file.write(' ' + str(j.id))
     file.close()
+
+    with open(csv, "a") as file:
+        file.write("{3} {0} {1} {2}\n".format(inst.k, inst.h, inst.f, inst.n))
 
 
 def export_tuner(instances, attempts, max_gen, const_mem, pop_size, cross_cha, mut_cha, swap_cha, change_cha):
